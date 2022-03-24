@@ -2,16 +2,17 @@
   "name": "mersenne-twister-ts",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "tsc"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/misteltein/mersenne-twister-ts.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "misteltein",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/misteltein/mersenne-twister-ts/issues"
