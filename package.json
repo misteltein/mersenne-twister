@@ -1,6 +1,6 @@
 {
   "name": "mersenne-twister-ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -20,5 +20,8 @@
   "homepage": "https://github.com/misteltein/mersenne-twister-ts#readme",
   "devDependencies": {
     "typescript": "^4.6.2"
+  },
+  "publishConfig": {
+     "@misteltein:mersenne-twister-ts": "https://npm.pkg.github.com/"
   }
 }
