@@ -1,1 +1,1 @@
-# mersenne-twister-ts
+# mersenne-twister

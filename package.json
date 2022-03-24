@@ -1,5 +1,5 @@
 {
-  "name": "@misteltein/mersenne-twister-ts",
+  "name": "@misteltein/mersenne-twister",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/misteltein/mersenne-twister-ts.git"
+    "url": "git+https://github.com/misteltein/mersenne-twister.git"
   },
   "keywords": [],
   "author": "misteltein",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/misteltein/mersenne-twister-ts/issues"
+    "url": "https://github.com/misteltein/mersenne-twister/issues"
   },
-  "homepage": "https://github.com/misteltein/mersenne-twister-ts#readme",
+  "homepage": "https://github.com/misteltein/mersenne-twister#readme",
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "jest": "^27.5.1",
