@@ -117,6 +117,10 @@ class MersenneTwister {
     genrand_res53(): number {
         return this.genrand_int53() * MersenneTwister.INV_53;
     }
+
+    _preview() {
+        return {mt: this.mt, mti: this.mti, mag01: this.mag01};
+    }
 }
 
 export default MersenneTwister;
