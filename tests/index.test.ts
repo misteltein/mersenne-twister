@@ -1,7 +1,9 @@
 import MersenneTwister from "../src/index";
 
-test('constructor', () => {
-    const mt = new MersenneTwister(1234);
-    console.dir(mt._preview())
-    expect(mt).toBeDefined();
+const positiveMT = require('./jsons/constructor_mt_seed_123456.json');
+
+test('constructor mt', () => {
+    const mt = new MersenneTwister(123456);
+    const sample = mt._preview().mt;
+    expect(sample).toEqual(positiveMT.mt);
 });

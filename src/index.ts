@@ -36,7 +36,9 @@ class MersenneTwister {
     init(s: number) {
         this.mt[0] = s & 0xffffffff;
         for (this.mti = 1; this.mti < MersenneTwister.MT_N; ++this.mti) {
-            this.mt[this.mti] = (1812433253 * (this.mt[this.mti - 1] ^ (this.mt[this.mti - 1] >>> 30)) + this.mti);
+            this.mt[this.mti] =
+                this.multiple_as_uint32(1812433253, (this.mt[this.mti - 1] ^ (this.mt[this.mti - 1] >>> 30)))
+                + this.mti;
             /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
             /* In the previous versions, MSBs of the seed affect   */
             /* only MSBs of the array mt[].                        */
@@ -116,6 +118,20 @@ class MersenneTwister {
      */
     genrand_res53(): number {
         return this.genrand_int53() * MersenneTwister.INV_53;
+    }
+
+    /**
+     * A function that interprets two 53-bit variables as 32-bit variables,
+     * multiplies them, and returns the result as a 32-bit variable
+     * @param {number} a
+     * @param {number} b
+     */
+    private multiple_as_uint32(a: number, b: number) {
+        const a1 = a >>> 16;
+        const a2 = a & 0xffff;
+        const b1 = b >>> 16;
+        const b2 = b & 0xffff;
+        return (((a1 * b2 + a2 * b1) << 16) + a2 * b2) >>> 0;
     }
 
     _preview() {
