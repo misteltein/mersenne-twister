@@ -10,13 +10,13 @@ const positive_genrand_res53 = require('./jsons/genrand_res53_seed_123456.json')
 test('mt after construction', () => {
     const mt = new MersenneTwister(123456);
     const positive = positiveMT.mt
-    const sample = mt._preview().mt;
+    const sample = mt._snapshot().mt;
     expect(sample).toEqual(positive);
 });
 
 test('mti after construction', () => {
     const mt = new MersenneTwister(123456);
-    const sample = mt._preview().mti;
+    const sample = mt._snapshot().mti;
     expect(sample).toEqual(624);
 });
 

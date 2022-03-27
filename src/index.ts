@@ -1,27 +1,27 @@
 /**
- * Mersenne Twister engine
+ * Mersenne-Twister Pseudorandom number generator
  */
 class MersenneTwister {
-    // period parameters
+    // Period parameters
     static readonly MT_N = 624 as number;
     static readonly MT_M = 397 as number;
     static readonly MATRIX_A = 0x9908b0df as number; // constant vector a
     static readonly UPPER_MASK = 0x80000000 as number; // most significant w-r bits
     static readonly LOWER_MASK = 0x7fffffff as number; // least significant r bits
+
+    // Inverses to avoid unnecessary division
     static readonly INV_1 = 1.0 / 0xffffffff;
     static readonly INV_2 = 1.0 / 0x100000000;
     static readonly INV_3 = 1.0 / 0x100000000;
     static readonly INV_53 = 1.0 / 0x20000000000000;
 
+    // States
     mt = new Array<number>(MersenneTwister.MT_N); // the array for the state vector
     mti = MersenneTwister.MT_M + 1; // mti==MT_N+1 means mt[MT_N] is not initialized
-
     mag01 = new Array<number>(2);
 
     /**
-     * Construct a Mersenne Twister engine
-     * @constructor
-     * @classes Mersenne Twister engine
+     * Create a Mersenne Twister engine
      * @param {number} s - seed(integer)
      */
     constructor(s: number) {
@@ -30,8 +30,8 @@ class MersenneTwister {
     }
 
     /**
-     * Initialize the Mersenne Twister engine
-     * @param {number} s - seed
+     * Initializes mt[MT_N] with a seed
+     * @param {number} s - seed(integer)
      */
     init(s: number) {
         this.mt[0] = s & 0xffffffff;
@@ -49,11 +49,12 @@ class MersenneTwister {
     }
 
     /**
-     * @return {number} random integer on [0,2^32]-real-interval
+     * generates a random number
+     * @return {number} random integer on [0,2^32-1]-interval
      */
     genrand_int32(): number {
         let y = 0 as number;
-        if (this.mti >= MersenneTwister.MT_N) {
+        if (this.mti >= MersenneTwister.MT_N) { // generate N words at one time
             let kk;
             for (kk = 0; kk < MersenneTwister.MT_N - MersenneTwister.MT_M; ++kk) {
                 y = (this.mt[kk] & MersenneTwister.UPPER_MASK) | (this.mt[kk + 1] & MersenneTwister.LOWER_MASK);
@@ -81,28 +82,32 @@ class MersenneTwister {
     }
 
     /**
-     * @return {number} random number on [0,1]-real-interval with 32 bit resolution
+     * generates a random number with 32 bit resolution
+     * @return {number} random number on [0,1]-real-interval
      */
     genrand_real1(): number {
         return this.genrand_int32() * MersenneTwister.INV_1;
     }
 
     /**
-     * @return {number} random number on [0,1)-real-interval with 32 bit resolution
+     * generates a random number with 32 bit resolution
+     * @return {number} random number on [0,1)-real-interval
      */
     genrand_real2(): number {
         return this.genrand_int32() * MersenneTwister.INV_2;
     }
 
     /**
-     * @return {number} random number on (0,1)-real-interval with 32 bit resolution
+     * generates a random number with 32 bit resolution
+     * @return {number} random number on (0,1)-real-interval
      */
     genrand_real3(): number {
         return (this.genrand_int32() + 0.5) * MersenneTwister.INV_3;
     }
 
     /**
-     * @return {number} random number on [0,1) with 53-bit resolution
+     * generates a random number with 53 bit resolution
+     * @return {number} random number on [0,1)-real-interval
      */
     genrand_res53(): number {
         const a = this.genrand_int32() >>> 5;
@@ -111,12 +116,14 @@ class MersenneTwister {
     }
 
     /**
-     * A function that interprets two 53-bit variables as 32-bit variables,
-     * multiplies them, and returns the result as a 32-bit variable
+     * A function that interprets two 53-bit variables as unsigned 32-bit variables,
+     * multiplies them, and returns the result as a unsigned 32-bit variable
      * @param {number} a
      * @param {number} b
+     * @access private
+     * @return {number} product as unsigned 32-bit
      */
-    private multiple_as_uint32(a: number, b: number) {
+    private multiple_as_uint32(a: number, b: number): number {
         const a1 = a >>> 16;
         const a2 = a & 0xffff;
         const b1 = b >>> 16;
@@ -124,7 +131,11 @@ class MersenneTwister {
         return (((a1 * b2 + a2 * b1) << 16) + a2 * b2) >>> 0;
     }
 
-    _preview() {
+    /**
+     * For test
+     * @return {Object} - private states of instance
+     */
+    _snapshot() {
         return {mt: this.mt, mti: this.mti, mag01: this.mag01};
     }
 }
