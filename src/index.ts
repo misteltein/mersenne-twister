@@ -43,7 +43,7 @@ class MersenneTwister {
             /* In the previous versions, MSBs of the seed affect   */
             /* only MSBs of the array mt[].                        */
             /* 2002/01/09 modified by Makoto Matsumoto             */
-            this.mt[this.mti] &= 0xffffffff;
+            this.mt[this.mti] >>>= 0;
             /* for >32 bit machines */
         }
     }
@@ -55,9 +55,6 @@ class MersenneTwister {
         let y = 0 as number;
         if (this.mti >= MersenneTwister.MT_N) {
             let kk;
-            if (this.mti === MersenneTwister.MT_N + 1) {
-                this.init(19650218);
-            }
             for (kk = 0; kk < MersenneTwister.MT_N - MersenneTwister.MT_M; ++kk) {
                 y = (this.mt[kk] & MersenneTwister.UPPER_MASK) | (this.mt[kk + 1] & MersenneTwister.LOWER_MASK);
                 this.mt[kk] = this.mt[kk + MersenneTwister.MT_M] ^ (y >>> 1) ^ this.mag01[y & 0x1];
@@ -81,15 +78,6 @@ class MersenneTwister {
         y ^= (y >>> 18);
 
         return y >>> 0;
-    }
-
-    /**
-     * @return {number} random integer on [0,2^53-1]
-     */
-    genrand_int53(): number {
-        const a = this.genrand_int32() >> 5;
-        const b = this.genrand_int32() >> 6;
-        return a * 0x4000000 + b;
     }
 
     /**
@@ -117,7 +105,9 @@ class MersenneTwister {
      * @return {number} random number on [0,1) with 53-bit resolution
      */
     genrand_res53(): number {
-        return this.genrand_int53() * MersenneTwister.INV_53;
+        const a = this.genrand_int32() >>> 5;
+        const b = this.genrand_int32() >>> 6;
+        return (a * 0x4000000 + b) * MersenneTwister.INV_53;
     }
 
     /**
