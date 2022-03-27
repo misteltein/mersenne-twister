@@ -1,8 +1,7 @@
 This program is a Mersenne-Twister pseudo-random number generator written in TypeScript,
 based on the program MT.h written in C by Makoto Matsumoto and Takuji Nishimura.
 
-Copyright (c) 2022, misteltein,
- All rights reserved.
+misteltein (misteltein.github@gmail.com)
 
 ==========
 

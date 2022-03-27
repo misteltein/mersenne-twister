@@ -1,3 +1,8 @@
+/*
+    The correct values were obtained by MT.h.
+    To test random number of floating number, we checks for a match to 10 decimal places.
+ */
+
 import MersenneTwister from "../src/index";
 
 const positiveMT = require('./jsons/constructor_mt_seed_123456.json');
