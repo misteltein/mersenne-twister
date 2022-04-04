@@ -9,7 +9,7 @@ We tested the execution results to see if they matched the original program.
 ## Installation
 
 ```
-npm install @misteltein/mersenne-twister@0.1.0
+npm install https://github.com/misteltein/mersenne-twister.git
 ```
 
 ## Usage
